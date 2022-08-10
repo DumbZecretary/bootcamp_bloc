@@ -1,4 +1,5 @@
 import 'package:count_app/counting/logic/counting_bloc.dart';
+import 'package:count_app/model/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -9,8 +10,8 @@ class ContentCounterWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CountingBloc, int>(buildWhen: (previous, current) {
-      return previous != current;
+    return BlocSelector<CountingBloc, AppState, int>(selector: (state) {
+      return state.value;
     }, builder: (context, data) {
       return Text(
         data.toString(),
