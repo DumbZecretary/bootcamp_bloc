@@ -118,7 +118,6 @@ void main() {
   });
 }
 
-// TODO: create read me make down to note the knowledge
 // TODO: integration testing
 // TODO: repository share reference
 // TODO: dependency injection
