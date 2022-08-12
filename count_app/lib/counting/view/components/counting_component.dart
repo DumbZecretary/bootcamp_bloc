@@ -26,6 +26,7 @@ class CountingComponent extends StatelessWidget {
           child: Column(
             children: [
               ButtonWidget(
+                key: const Key("increase button"),
                 icon: Icons.add,
                 onPress: () {
                   context
@@ -37,6 +38,7 @@ class CountingComponent extends StatelessWidget {
                 height: 24,
               ),
               ButtonWidget(
+                key: const Key("decrease button"),
                 icon: Icons.remove,
                 onPress: () {
                   context

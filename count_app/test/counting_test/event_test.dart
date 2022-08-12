@@ -118,7 +118,6 @@ void main() {
   });
 }
 
-// TODO: integration testing
 // TODO: repository share reference
 // TODO: dependency injection
 // TODO: make snippet for built value
