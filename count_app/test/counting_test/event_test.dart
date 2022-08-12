@@ -129,6 +129,3 @@ void main() {
 // TODO: notification - permission
 
 // to prevent seeing error on android folder for flutter project, open a new flutter project without error then reopen this project
-
-// flutter test --coverage && genhtml coverage/lcov.info --output=coverage
-// open coverage/index.html
