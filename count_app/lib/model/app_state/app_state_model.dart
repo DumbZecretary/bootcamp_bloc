@@ -16,4 +16,6 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
   }
 }
 
+// TODO: state status idle, loading, error, success
+
 // command: flutter packages pub run build_runner build --delete-conflicting-outputs
