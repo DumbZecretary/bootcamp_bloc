@@ -17,11 +17,14 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
   @override
   Iterable<Object?> serialize(Serializers serializers, AppState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object?>[
-      'value',
-      serializers.serialize(object.value, specifiedType: const FullType(int)),
-    ];
-
+    final result = <Object?>[];
+    Object? value;
+    value = object.value;
+    if (value != null) {
+      result
+        ..add('value')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     return result;
   }
 
@@ -38,7 +41,7 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
       switch (key) {
         case 'value':
           result.value = serializers.deserialize(value,
-              specifiedType: const FullType(int))! as int;
+              specifiedType: const FullType(int)) as int?;
           break;
       }
     }
@@ -49,14 +52,12 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
 
 class _$AppState extends AppState {
   @override
-  final int value;
+  final int? value;
 
   factory _$AppState([void Function(AppStateBuilder)? updates]) =>
       (new AppStateBuilder()..update(updates))._build();
 
-  _$AppState._({required this.value}) : super._() {
-    BuiltValueNullFieldError.checkNotNull(value, r'AppState', 'value');
-  }
+  _$AppState._({this.value}) : super._();
 
   @override
   AppState rebuild(void Function(AppStateBuilder) updates) =>
@@ -116,10 +117,7 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   AppState build() => _build();
 
   _$AppState _build() {
-    final _$result = _$v ??
-        new _$AppState._(
-            value: BuiltValueNullFieldError.checkNotNull(
-                value, r'AppState', 'value'));
+    final _$result = _$v ?? new _$AppState._(value: value);
     replace(_$result);
     return _$result;
   }

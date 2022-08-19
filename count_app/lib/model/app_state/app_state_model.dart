@@ -6,7 +6,7 @@ part 'app_state_model.g.dart';
 abstract class AppState implements Built<AppState, AppStateBuilder> {
   static Serializer<AppState> get serializer => _$appStateSerializer;
 
-  int get value;
+  int? get value;
 
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;

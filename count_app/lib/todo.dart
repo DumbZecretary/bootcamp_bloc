@@ -1,5 +1,4 @@
-// TODO: unit test
-// TODO: dependency injection
+// TODO: unit test repository
 // TODO: make snippet for built value
 // TODO: repository sql lite
 // TODO: repository hive
