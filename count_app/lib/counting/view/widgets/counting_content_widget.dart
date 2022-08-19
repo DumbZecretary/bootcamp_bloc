@@ -11,7 +11,7 @@ class ContentCounterWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocSelector<CountingBloc, AppState, int>(selector: (state) {
-      return state.value;
+      return state.value ?? 0;
     }, builder: (context, data) {
       return Text(
         data.toString(),

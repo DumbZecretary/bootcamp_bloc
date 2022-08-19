@@ -6,7 +6,7 @@ class CountingRepoSharedPreferences extends AbsCountingRepo {
   final SharedPreferences sharedPreferences;
   CountingRepoSharedPreferences({required this.sharedPreferences});
   @override
-  create() async {
+  Future create() async {
     try {
       await sharedPreferences.setInt('counter', 0);
     } catch (e) {
@@ -16,7 +16,7 @@ class CountingRepoSharedPreferences extends AbsCountingRepo {
   }
 
   @override
-  delete() async {
+  Future delete() async {
     try {
       await sharedPreferences.remove('counter');
     } catch (e) {
@@ -37,9 +37,9 @@ class CountingRepoSharedPreferences extends AbsCountingRepo {
   }
 
   @override
-  update({required int newValue}) async {
+  Future<void> update(int? newValue) async {
     try {
-      await sharedPreferences.setInt('counter', newValue);
+      await sharedPreferences.setInt('counter', newValue ?? 0);
     } catch (e) {
       DebugLogger debugLogger = DebugLogger();
       debugLogger.log("Counting repo update error: $e");

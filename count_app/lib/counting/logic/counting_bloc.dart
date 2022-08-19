@@ -8,7 +8,7 @@ import 'package:count_app/utils/logging.dart';
 class CountingBloc extends Bloc<CountingEvent, AppState> {
   final CountingRepoSharedPreferences _countingRepoSharedPreferences;
   CountingBloc(
-      {required int initialState,
+      {required int? initialState,
       required CountingRepoSharedPreferences countingRepoSharedPreferences})
       : _countingRepoSharedPreferences = countingRepoSharedPreferences,
         super(AppState((b) => b..value = initialState)) {
@@ -20,26 +20,32 @@ class CountingBloc extends Bloc<CountingEvent, AppState> {
   FutureOr<void> _onIncrease(
       CountingIncreaseEvent event, Emitter<AppState> emit) async {
     try {
-      final int newStateValue = state.value + event.value;
-      await _countingRepoSharedPreferences.update(newValue: newStateValue);
+      final int newStateValue = (state.value ?? 0) + event.value;
       final AppState newAppState =
           state.rebuild((p0) => p0..value = newStateValue);
+      await _countingRepoSharedPreferences.update(newStateValue);
       emit(newAppState);
     } catch (e) {
       addError(Exception("increment error"), StackTrace.current);
+      DebugLogger debugLogger = DebugLogger();
+      debugLogger.log('Get error: $e');
     }
   }
 
   FutureOr<void> _onDecrease(
       CountingDecreaseEvent event, Emitter<AppState> emit) async {
-    try {} catch (e) {
+    try {
+      final int newStateValue = (state.value ?? 0) - event.value;
+      final AppState newAppState =
+          state.rebuild((p0) => p0..value = newStateValue);
+      await _countingRepoSharedPreferences.update(newStateValue).whenComplete(
+            () => emit(newAppState),
+          );
+    } catch (e) {
       addError(Exception("decrement error"), StackTrace.current);
+      DebugLogger debugLogger = DebugLogger();
+      debugLogger.log('Get error: $e');
     }
-    final int newStateValue = state.value - event.value;
-    await _countingRepoSharedPreferences.update(newValue: newStateValue);
-    final AppState newAppState =
-        state.rebuild((p0) => p0..value = newStateValue);
-    emit(newAppState);
   }
 
   Future<void> _onGetCurrentState(
@@ -51,13 +57,18 @@ class CountingBloc extends Bloc<CountingEvent, AppState> {
       currentValue = _countingRepoSharedPreferences.read();
       if (currentValue == null) {
         currentValue = 0;
-        await _countingRepoSharedPreferences.create();
+        final AppState newAppState =
+            state.rebuild((p0) => p0..value = currentValue);
+        await _countingRepoSharedPreferences.create().whenComplete(() {
+          emit(newAppState);
+        });
+      } else {
+        emit(state.rebuild((b) => b..value = currentValue));
       }
-      final AppState newAppState =
-          state.rebuild((p0) => p0..value = currentValue);
-      emit(newAppState);
     } catch (e) {
       addError(Exception("get current error"), StackTrace.current);
+      DebugLogger debugLogger = DebugLogger();
+      debugLogger.log('Get error: $e');
     }
   }
 
