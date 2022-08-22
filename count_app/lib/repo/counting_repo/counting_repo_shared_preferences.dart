@@ -38,11 +38,18 @@ class CountingRepoSharedPreferences extends AbsCountingRepo {
 
   @override
   Future<void> update(int? newValue) async {
-    try {
-      await sharedPreferences.setInt('counter', newValue ?? 0);
-    } catch (e) {
+    // try {
+    await sharedPreferences
+        .setInt('counter', newValue ?? 0)
+        .onError((error, stackTrace) {
       DebugLogger debugLogger = DebugLogger();
-      debugLogger.log("Counting repo update error: $e");
-    }
+      debugLogger.log("Counting repo update error: $error");
+      return false;
+    });
+    // }
+    // catch (e) {
+    //   DebugLogger debugLogger = DebugLogger();
+    //   debugLogger.log("Counting repo update error: $e");
+    // }
   }
 }
