@@ -25,6 +25,20 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
         ..add('value')
         ..add(serializers.serialize(value, specifiedType: const FullType(int)));
     }
+    value = object.locale;
+    if (value != null) {
+      result
+        ..add('locale')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
+    value = object.status;
+    if (value != null) {
+      result
+        ..add('status')
+        ..add(serializers.serialize(value,
+            specifiedType: const FullType(String)));
+    }
     return result;
   }
 
@@ -43,6 +57,14 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
           result.value = serializers.deserialize(value,
               specifiedType: const FullType(int)) as int?;
           break;
+        case 'locale':
+          result.locale = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
+        case 'status':
+          result.status = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String?;
+          break;
       }
     }
 
@@ -53,11 +75,15 @@ class _$AppStateSerializer implements StructuredSerializer<AppState> {
 class _$AppState extends AppState {
   @override
   final int? value;
+  @override
+  final String? locale;
+  @override
+  final String? status;
 
   factory _$AppState([void Function(AppStateBuilder)? updates]) =>
       (new AppStateBuilder()..update(updates))._build();
 
-  _$AppState._({this.value}) : super._();
+  _$AppState._({this.value, this.locale, this.status}) : super._();
 
   @override
   AppState rebuild(void Function(AppStateBuilder) updates) =>
@@ -69,17 +95,24 @@ class _$AppState extends AppState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is AppState && value == other.value;
+    return other is AppState &&
+        value == other.value &&
+        locale == other.locale &&
+        status == other.status;
   }
 
   @override
   int get hashCode {
-    return $jf($jc(0, value.hashCode));
+    return $jf(
+        $jc($jc($jc(0, value.hashCode), locale.hashCode), status.hashCode));
   }
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper(r'AppState')..add('value', value))
+    return (newBuiltValueToStringHelper(r'AppState')
+          ..add('value', value)
+          ..add('locale', locale)
+          ..add('status', status))
         .toString();
   }
 }
@@ -91,12 +124,22 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   int? get value => _$this._value;
   set value(int? value) => _$this._value = value;
 
+  String? _locale;
+  String? get locale => _$this._locale;
+  set locale(String? locale) => _$this._locale = locale;
+
+  String? _status;
+  String? get status => _$this._status;
+  set status(String? status) => _$this._status = status;
+
   AppStateBuilder();
 
   AppStateBuilder get _$this {
     final $v = _$v;
     if ($v != null) {
       _value = $v.value;
+      _locale = $v.locale;
+      _status = $v.status;
       _$v = null;
     }
     return this;
@@ -117,7 +160,8 @@ class AppStateBuilder implements Builder<AppState, AppStateBuilder> {
   AppState build() => _build();
 
   _$AppState _build() {
-    final _$result = _$v ?? new _$AppState._(value: value);
+    final _$result =
+        _$v ?? new _$AppState._(value: value, locale: locale, status: status);
     replace(_$result);
     return _$result;
   }

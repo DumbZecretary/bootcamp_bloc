@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:count_app/app_connect_repo.dart';
-import 'package:count_app/observer.dart';
+import 'package:count_app/application/app_connect_repo.dart';
+import 'package:count_app/application/observer.dart';
 import 'package:count_app/repo/counting_repo/counting_repo_shared_preferences.dart';
 import 'package:count_app/utils/logging.dart';
 import 'package:flutter/material.dart';

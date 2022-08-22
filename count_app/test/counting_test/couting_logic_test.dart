@@ -34,7 +34,10 @@ void main() {
       test('has correct initial state', () {
         expect(
           countingBloc().state,
-          AppState((b) => b..value = 0),
+          AppState((b) => b
+            ..value = 0
+            ..locale = 'en'
+            ..status = 'loading'),
         );
       });
     });
@@ -48,7 +51,10 @@ void main() {
           build: countingBloc,
           act: (bloc) => bloc.add(CountingGetCurrentStateEvent()),
           expect: () => [
-                AppState((b) => b..value = 0),
+                AppState((b) => b
+                  ..value = 0
+                  ..locale = "en"
+                  ..status = 'idle'),
               ],
           verify: (_) {
             verify(() => mockCountingRepoSharedPreferences.create()).called(1);
@@ -60,7 +66,10 @@ void main() {
           build: currentCountingBloc,
           act: (bloc) => bloc.add(CountingGetCurrentStateEvent()),
           expect: () => [
-                AppState((b) => b..value = 10),
+                AppState((b) => b
+                  ..value = 10
+                  ..locale = 'en'
+                  ..status = 'idle'),
               ],
           verify: (_) {
             verifyNever(() => mockCountingRepoSharedPreferences.create());
@@ -92,7 +101,10 @@ void main() {
           build: countingBloc,
           act: (bloc) => bloc.add(CountingIncreaseEvent((b) => b..value = 1)),
           expect: () => [
-                AppState((b) => b..value = 1),
+                AppState((b) => b
+                  ..value = 1
+                  ..locale = 'vi'
+                  ..status = 'idle'),
               ],
           verify: (_) {
             verify(() => mockCountingRepoSharedPreferences.update(any()))
@@ -120,7 +132,10 @@ void main() {
           build: countingBloc,
           act: (bloc) => bloc.add(CountingDecreaseEvent((b) => b..value = 1)),
           expect: () => [
-                AppState((b) => b..value = -1),
+                AppState((b) => b
+                  ..value = -1
+                  ..locale = 'en'
+                  ..status = 'idle'),
               ],
           verify: (_) {
             verify(() => mockCountingRepoSharedPreferences.update(any()))
