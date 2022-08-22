@@ -8,6 +8,10 @@ abstract class AppState implements Built<AppState, AppStateBuilder> {
 
   int? get value;
 
+  String? get locale;
+
+  String? get status;
+
   AppState._();
   factory AppState([void Function(AppStateBuilder) updates]) = _$AppState;
 

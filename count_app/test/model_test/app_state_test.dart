@@ -35,18 +35,26 @@ void main() {
     });
     group("Serializer test", () {
       // given
-      const String sampleAppState = '{"value": 10}';
+      const String sampleAppState =
+          '{"value": 10, "status": "idle", "locale": "en"}';
       setUp(() {
-        appState = AppState((b) => b..value = 10);
+        appState = AppState((b) => b
+          ..value = 10
+          ..status = "idle"
+          ..locale = "en");
       });
       tearDown(() {
-        appState = AppState((b) => b..value = 10);
+        appState = AppState((b) => b
+          ..value = 10
+          ..status = "idle"
+          ..locale = "en");
       });
       test("Normal State value is 10 when encoding", () {
         // when
         var encode = serializers.serialize(appState);
         // then
-        expect(encode.toString(), '''{\$: AppState, value: 10}''');
+        expect(encode.toString(),
+            '''{\$: AppState, value: 10, locale: en, status: idle}''');
       });
       test("Normal State value is 10 when decoding", () {
         // when

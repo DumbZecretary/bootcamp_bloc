@@ -1,4 +1,4 @@
-import 'package:count_app/app.dart';
+import 'package:count_app/application/app.dart';
 import 'package:count_app/repo/counting_repo/counting_repo_shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
